@@ -15,7 +15,7 @@ def get_imports(file_path):
                     imports.add(node.module)
             return imports
     except Exception as e:
-        print(f"Error processing {file_path}: {e}")
+        print("Error processing {}: {}".format(file_path, e))
         return set()
 
 def find_python_files(folder):
@@ -28,7 +28,7 @@ def find_python_files(folder):
 
 def check_pip_installable(package_name):
     try:
-        response = requests.get(f"https://pypi.org/pypi/{package_name}/json")
+        response = requests.get("https://pypi.org/pypi/{}/json".format(package_name))
         response.raise_for_status()
         return True
     except requests.HTTPError:
@@ -48,7 +48,7 @@ def main(folder):
     
     with open('requirements.txt', 'w') as req_file:
         for package in installable_imports:
-            req_file.write(f"{package}\n")
+            req_file.write("{}\n".format(package))
 
     print("Requirements successfully written to requirements.txt")
 
